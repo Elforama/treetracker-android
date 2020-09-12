@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
     private val analytics: Analytics by inject()
     private val locationUpdateManager: LocationUpdateManager by inject()
     private val locationDataCapturer: LocationDataCapturer by inject()
-    private val sharedPreferences: SharedPreferences by inject()
     private var fragment: Fragment? = null
 
     /**
@@ -192,39 +191,25 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
 
         // TODO this check may not longer be necessary
         if (!locationUpdateManager.isLocationEnabled()) {
-            val builder = AlertDialog.Builder(this@MainActivity)
-
-            builder.setTitle(R.string.enable_location_access)
-            builder.setMessage(
-                R.string.you_must_enable_location_access_in_your_settings_in_order_to_continue)
-
-            builder.setPositiveButton(R.string.ok) { dialog, which ->
-                if (Build.VERSION.SDK_INT >= 19) {
-                    // LOCATION_MODE
-                    // Sollution for problem 25 added the ability to pop up location start activity
+            val alertDialog = AlertDialog.Builder(this@MainActivity)
+                .setTitle(R.string.enable_location_access)
+                .setMessage(
+                    R.string.you_must_enable_location_access_in_your_settings_in_order_to_continue)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                } else {
-                    // LOCATION_PROVIDERS_ALLOWED
-
-                    val locationProviders = Settings.Secure.getString(contentResolver,
-                        Settings.Secure.LOCATION_PROVIDERS_ALLOWED)
-                    if (locationProviders == null || locationProviders == "") {
-                        startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                    }
+                    dialog.dismiss()
                 }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    finish()
+                    dialog.dismiss()
+                }
+                .create()
 
-                dialog.dismiss()
+            with(alertDialog) {
+                setCancelable(false)
+                setCanceledOnTouchOutside(false)
+                show()
             }
-
-            builder.setNegativeButton(R.string.cancel) { dialog, which ->
-                finish()
-                dialog.dismiss()
-            }
-
-            val alert = builder.create()
-            alert.setCancelable(false)
-            alert.setCanceledOnTouchOutside(false)
-            alert.show()
 
             return
         }

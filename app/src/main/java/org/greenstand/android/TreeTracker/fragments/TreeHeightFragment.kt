@@ -26,10 +26,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class TreeHeightFragment : Fragment() {
+
     private val vm: TreeHeightViewModel by viewModel()
     private val args: TreeHeightFragmentArgs by navArgs()
     private var isInitialState = true
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_tree_height, container, false)

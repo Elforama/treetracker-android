@@ -26,7 +26,7 @@ class DataViewModel(private val dao: TreeTrackerDAO,
     val isSyncing: LiveData<Boolean> = isSyncingLiveData
 
 
-    private var _isSyncing: Boolean? by Delegates.observable<Boolean?>(null) { _, _, startedSyncing ->
+    private var _isSyncing: Boolean? by Delegates.observable(null) { _, _, startedSyncing ->
 
         startedSyncing ?: return@observable
 
