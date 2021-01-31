@@ -40,6 +40,8 @@ class NewTreeViewModel(
 
     val isTreeHeightEnabled = FeatureFlags.TREE_HEIGHT_FEATURE_ENABLED
 
+    val defaultWallet = user.wallet
+
     var isNextButtonActive = !isDbhEnabled
         private set
 
@@ -58,7 +60,9 @@ class NewTreeViewModel(
         }
     }
 
-    suspend fun createTree(note: String, dbh: String?) {
+    suspend fun createTree(note: String, dbh: String?, wallet: String) {
+
+        user.wallet = wallet
 
         val newTree = Tree(
             treeUuid = newTreeUuid!!,
@@ -68,7 +72,6 @@ class NewTreeViewModel(
         )
 
         dbh?.let { newTree.addTreeAttribute(Tree.DBH_ATTR_KEY, it) }
-
 
         val absoluteStepCount = stepCounter.absoluteStepCount ?: 0
         val lastStepCountWhenCreatingTree = stepCounter.absoluteStepCountOnTreeCapture ?: 0

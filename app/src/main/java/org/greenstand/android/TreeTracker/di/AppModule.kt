@@ -120,7 +120,7 @@ val appModule = module {
 
     factory { UploadPlanterUseCase(get(), get(), get(), get()) }
 
-    factory { CreateTreeUseCase(get(), get(), get()) }
+    factory { CreateTreeUseCase(get(), get(), get(), get()) }
 
     factory { CreateFakeTreesUseCase(get(), get(), get(), get()) }
 

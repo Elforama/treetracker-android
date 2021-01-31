@@ -63,7 +63,7 @@ class NewTreeFragment :
         fragmentNewTreeNote.visibleIf(vm.isNoteEnabled)
         fragmentNewTreeDBH.visibleIf(vm.isDbhEnabled)
         fragmentNewTreeGPS.visibleIf(vm.isDbhEnabled)
-
+        fragmentWalletName.setText(vm.defaultWallet ?: "")
         fragmentNewTreeSave.isEnabled = !vm.isDbhEnabled
 
         if (vm.isTreeHeightEnabled) {
@@ -104,7 +104,8 @@ class NewTreeFragment :
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 vm.createTree(
                     fragmentNewTreeNote.text.toString(),
-                    fragmentNewTreeDBH.text.toString())
+                    fragmentNewTreeDBH.text.toString(),
+                    fragmentWalletName.text.toString())
             }
         }
 

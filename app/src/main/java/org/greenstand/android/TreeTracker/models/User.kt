@@ -11,6 +11,10 @@ class User(
     val isLoggedIn: Boolean
         get() = planterCheckinId != -1L
 
+    var wallet: String?
+        get() = preferences.getString(WALLET_KEY)
+        set(value) = preferences.edit().putString(WALLET_KEY, value).apply()
+
     var firstName: String?
         get() = preferences.getString(FIRST_NAME_KEY)
         set(value) = preferences.edit().putString(FIRST_NAME_KEY, value).apply()
@@ -52,5 +56,6 @@ class User(
         val LAST_NAME_KEY = BASE_KEY + PrefKey("last-name")
         val PROFILE_PHOTO_PATH_KEY = BASE_KEY + PrefKey("profile-photo-path")
         val LAST_CHECK_IN_TIME_IN_KEY = BASE_KEY + PrefKey("last-check-in-time-in-seconds")
+        val WALLET_KEY = BASE_KEY + PrefKey("wallet-name")
     }
 }
